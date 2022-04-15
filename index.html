@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: black;
+            width: 100vw;
+            height: 100vh;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+        #video {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #audio {
+            display: none;
+        }
+
+        #sub {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            color: white;
+            background: magenta;
+            text-align: center;
+            width: 100%;
+            z-index: 100;
+            font-size: 24px;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        #toggle {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<script src="vid.js"></script>
+<body>
+    <video id="audio" preload="metadata">
+        <source src="./audio.mp3" type="audio/mp3">
+        <track id="eng" kind="captions" src="./eng.vtt" label="English" />
+        <track id="kor" kind="captions" src="./kor.vtt" label="Korean" />
+    </video>
+    <video id="video" preload="metadata" loop>
+        <source src="./video.mp4" type="video/mp4">
+    </video>
+    <button id="toggle">Start</button>
+    <p id="sub"></p>
+</body>
+</html>

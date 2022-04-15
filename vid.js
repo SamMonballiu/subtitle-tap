@@ -4,6 +4,9 @@
 let subtitles = [];
 let activeTrack = 0;
 
+// show a toggle button as an alternative to tapping the video
+const showToggleButton = true;
+
 let toggle;
 let audio;
 let video;
@@ -59,6 +62,10 @@ function toggleActiveSubtitle() {
 
 function setup() {
   toggle.addEventListener("click", toggleActiveSubtitle);
+
+  if (!showToggleButton) {
+    toggle.classList.add("hidden");
+  }
 
   audio.addEventListener("timeupdate", showSubtitle);
   audio.addEventListener("ended", function () {

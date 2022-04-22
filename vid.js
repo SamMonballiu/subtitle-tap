@@ -13,6 +13,7 @@ let video;
 let sub;
 
 function getSubtitles(trackIndex) {
+  console.log("getSubtitles");
   const trk = audio.textTracks[trackIndex];
   if (!trk) {
     console.log("no track");
@@ -40,6 +41,7 @@ function showSubtitle() {
 }
 
 function toggleActiveSubtitle() {
+  console.log("toggleActiveSubtitle");
   if (audio.currentTime === 0) {
     if (subtitles.length === 0) {
       subtitles = getSubtitles(0);
@@ -72,7 +74,10 @@ function setup() {
     audio.currentTime = 0;
   });
 
-  video.addEventListener("touchend", toggleActiveSubtitle);
+  video.addEventListener("touchend", function () {
+    console.log("video touch");
+    toggleActiveSubtitle();
+  });
 
   document.getElementById("kor").addEventListener("loaded", function () {
     subtitles = getSubtitles(0);
@@ -83,6 +88,11 @@ function setup() {
     audio.textTracks[1].mode = "hidden";
     video.volume = 0;
     video.play();
+
+    setTimeout(() => {
+      audio.textTracks[0].addCue(new VTTCue(0, 12, "[Test Eng]"));
+      audio.textTracks[1].addCue(new VTTCue(0, 12, "[Test Kor]"));
+    }, 2000);
   });
 }
 
@@ -91,5 +101,6 @@ window.addEventListener("DOMContentLoaded", () => {
   audio = document.getElementById("audio");
   sub = document.getElementById("sub");
   video = document.getElementById("video");
+  console.log("hello from javascript!");
   setup();
 });

@@ -1,63 +1,155 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        body {
-            background: black;
-            width: 100vw;
-            height: 100vh;
-            padding: 0;
-            margin: 0;
-            overflow: hidden;
-        }
-        #video {
-            width: 100vw;
-            height: 100vh;
-        }
+      body {
+        background: black;
+        width: 100vw;
+        height: 100vh;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+      }
+      #video {
+        width: 50vw;
+        height: 50vh;
+        margin-top: 12vh;
+      }
 
-        #audio {
-            display: none;
-        }
+      #audio {
+        display: none;
+      }
 
-        #sub {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            color: white;
-            background: magenta;
-            text-align: center;
-            width: 100%;
-            z-index: 100;
-            font-size: 24px;
-            font-family: "Segoe UI", sans-serif;
-        }
+      #sub {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        color: white;
+        background: magenta;
+        text-align: center;
+        width: 100%;
+        z-index: 100;
+        font-size: 24px;
+        font-family: "Segoe UI", sans-serif;
+      }
 
-        #toggle {
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
+      #toggle {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
 
-        .hidden {
-            display: none;
-        }
+      #console {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 600px;
+        opacity: 0.85;
+      }
+
+      .hidden {
+        display: none;
+      }
     </style>
-</head>
-<script src="vid.js"></script>
-<body>
-    <video id="audio" preload="metadata">
-        <source src="./audio.mp3" type="audio/mp3">
-        <track id="eng" kind="captions" src="./eng.vtt" label="English" />
-        <track id="kor" kind="captions" src="./kor.vtt" label="Korean" />
-    </video>
-    <video id="video" preload="metadata" loop>
-        <source src="./video.mp4" type="video/mp4">
-    </video>
+  </head>
+
+  <div id="console">
+    <div
+      id="consolelog"
+      style="
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 12px;
+        margin: 40px 30px 0px;
+        background-color: white;
+        border: 2px solid black;
+        padding: 10px;
+      "
+    ></div>
+
+    <input
+      type="text"
+      id="consoleinput"
+      style="margin: 0px 30px; width: 400px"
+      onkeypress="return evalConsoleInput(event, this.value);"
+    />
+  </div>
+
+  <script type="text/javascript">
+    // https://www.mutuallyhuman.com/blog/debugging-javascript-in-a-hostile-environment/
+    var appendConsole = function (message, type) {
+      var color = "black";
+      if (type === "error") {
+        color = "red";
+      } else if (type === "debug") {
+        color = "blue";
+      }
+
+      var div = document.createElement("div");
+      div.style.color = color;
+      div.style.marginBottom = "10px";
+
+      div.innerHTML = message;
+
+      document.getElementById("consolelog").appendChild(div);
+    };
+
+    var originalConsole = null;
+
+    if (window.console != null) {
+      originalConsole = window.console;
+    }
+
+    window.console = {
+      log: function (message) {
+        appendConsole(message, "info");
+        originalConsole.log(message);
+      },
+      info: function (message) {
+        appendConsole(message, "info");
+        originalConsole.info(message);
+      },
+      debug: function (message) {
+        appendConsole(message, "debug");
+        originalConsole.debug(message);
+      },
+      error: function (message) {
+        appendConsole(message, "error");
+        originalConsole.error(message);
+      },
+    };
+
+    function evalConsoleInput(e, message) {
+      if (e.keyCode == 13) {
+        // 13 is the keycode for the enter key
+        var inputField = document.getElementById("consoleinput");
+        var evalString = inputField.value;
+
+        console.log("> " + evalString);
+
+        try {
+          var returnValue = eval(evalString);
+          console.log(returnValue);
+        } catch (e) {
+          console.error(e.message);
+        } finally {
+          inputField.value = "";
+        }
+      }
+    }
+  </script>
+  <script src="vid.js"></script>
+  <body>
+    <audio id="audio" preload="metadata">
+      <source src="./audio.mp3" type="audio/mp3" />
+      <track id="eng" kind="captions" label="English" />
+      <track id="kor" kind="captions" label="Korean" />
+    </audio>
+    <video id="video" preload="metadata" loop autoplay src="video.mp4"></video>
     <button id="toggle">Start</button>
     <p id="sub"></p>
-</body>
+  </body>
 </html>

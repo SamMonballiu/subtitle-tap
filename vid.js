@@ -5,7 +5,7 @@ let subtitles = [];
 let activeTrack = 0;
 
 // show a toggle button as an alternative to tapping the video
-const showToggleButton = true;
+var showToggleButton = true;
 
 let toggle;
 let audio;
@@ -14,7 +14,7 @@ let sub;
 
 function getSubtitles(trackIndex) {
   console.log("getSubtitles");
-  const trk = audio.textTracks[trackIndex];
+  var trk = audio.textTracks[trackIndex];
   if (!trk) {
     console.log("no track");
     return [];
@@ -33,8 +33,8 @@ function getSubtitles(trackIndex) {
 }
 
 function showSubtitle() {
-  const currentTime = audio.currentTime;
-  const relevantSubtitle = subtitles.find(
+  var currentTime = audio.currentTime;
+  var relevantSubtitle = subtitles.find(
     (st) => st.start <= currentTime && st.end >= currentTime
   );
   sub.innerText = relevantSubtitle?.text || "";
@@ -63,6 +63,15 @@ function toggleActiveSubtitle() {
 }
 
 function setup() {
+  var toggle = document.getElementById("toggle");
+  var audio = document.getElementById("audio");
+  var sub = document.getElementById("sub");
+  var video = document.getElementById("video");
+
+  console.log("running setup.");
+  console.log("toggle: ",  toggle);
+  console.log("video: ", video);
+
   toggle.addEventListener("click", toggleActiveSubtitle);
 
   if (!showToggleButton) {

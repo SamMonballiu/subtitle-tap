@@ -69,10 +69,10 @@ function setup() {
   var video = document.getElementById("video");
 
   console.log("running setup.");
-  console.log("found toggle: ",  toggle !== undefined);
-  console.log("found video: ", video !== undefined);
-  console.log("found audio: ", audio !== undefined);
-
+  console.log(`found toggle: ${toggle !== undefined}`);
+  console.log(`found video: ${video !== undefined}`);
+  console.log(`found audio: ${audio !== undefined}`);
+  
   toggle.addEventListener("click", toggleActiveSubtitle);
 
   if (!showToggleButton) {

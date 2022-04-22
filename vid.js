@@ -72,7 +72,7 @@ function setup() {
   console.log(`found toggle: ${toggle !== undefined}`);
   console.log(`found video: ${video !== undefined}`);
   console.log(`found audio: ${audio !== undefined}`);
-  
+
   toggle.addEventListener("click", toggleActiveSubtitle);
 
   if (!showToggleButton) {
@@ -106,7 +106,7 @@ function setup() {
   });
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("pageshow", () => {
   toggle = document.getElementById("toggle");
   audio = document.getElementById("audio");
   sub = document.getElementById("sub");

@@ -106,11 +106,13 @@ function setup() {
   });
 }
 
-window.addEventListener("pageshow", () => {
+window.setTimeout(function() {
   toggle = document.getElementById("toggle");
   audio = document.getElementById("audio");
   sub = document.getElementById("sub");
   video = document.getElementById("video");
   console.log("hello from javascript!");
   setup();
-});
+}, 8000);
+
+alert("starting up");

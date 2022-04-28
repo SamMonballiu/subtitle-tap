@@ -254,8 +254,8 @@
 
       setTimeout(() => {
         console.log("add cues");
-        audio.textTracks[0].addCue(new VTTCue(0, 12, "[Test Eng]"));
-        audio.textTracks[1].addCue(new VTTCue(0, 12, "[Test Kor]"));
+        //audio.textTracks[0].addCue(new VTTCue(0, 12, "[Test Eng]"));
+        //audio.textTracks[1].addCue(new VTTCue(0, 12, "[Test Kor]"));
       }, 2000);
 
       setup();
@@ -266,8 +266,8 @@
   <body>
     <audio id="audio" preload="metadata">
       <source src="./audio.mp3" type="audio/mp3" />
-      <track id="eng" kind="captions" label="English" />
-      <track id="kor" kind="captions" label="Korean" />
+      <track id="eng" kind="captions" src="eng.vtt" label="English" />
+      <track id="kor" kind="captions" src="kor.vtt" label="Korean" />
     </audio>
     <video
       id="video"
